@@ -1,6 +1,5 @@
-.idea
-src/config.ts
 dist
+.idea
 
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template

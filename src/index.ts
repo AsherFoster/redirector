@@ -1,12 +1,12 @@
 import * as Raven from 'raven';
-import * as http from 'http'
+import * as http from 'http';
 import * as url from 'url';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as path from 'path';
-import config from './config';
 import {Db, Collection, MongoClient} from 'mongodb';
 
+const MONGO_URI = process.env.CUSTOMCONNSTR_MONGO_URI || process.env.MONGO_URI;
 const PORT = process.env.PORT || 80;
 
 let db: Db = null;
@@ -28,8 +28,8 @@ async function sendFile(res: http.ServerResponse, filepath: string, status: numb
   const {size} = await util.promisify(fs.stat)(filepath);
 
   res.writeHead(status, {
-    'Content-Type': 'text/html',
-    'Content-Length': size
+    'Content-Length': size,
+    'Content-Type': 'text/html'
   });
   fs.createReadStream(filepath).pipe(res);
 }
@@ -63,12 +63,12 @@ async function redirector(req: http.IncomingMessage, res: http.ServerResponse): 
     });
     res.writeHead(500, {'Content-Type': 'application/json'});
     res.end(JSON.stringify({
-      success: 'false',
       error: {
         code: 'InternalError',
-        message: 'The application encountered an internal error',
-        id: rid
-      }
+        id: rid,
+        message: 'The application encountered an internal error'
+      },
+      success: 'false'
     }));
     return;
   }
@@ -77,16 +77,16 @@ async function redirector(req: http.IncomingMessage, res: http.ServerResponse): 
   res.end();
 }
 
-MongoClient.connect(config.mongoHost, {useNewUrlParser: true}, (err, client: MongoClient) => {
+MongoClient.connect(MONGO_URI, {useNewUrlParser: true}, (err, client: MongoClient) => {
   if(err) throw err;
   console.log('Connected to DB!');
 
-  db = client.db(config.mongoDb);
+  db = client.db('apis');
   redirects = db.collection('redirects');
 
   const server = http.createServer(redirector);
 
   server.listen(PORT);
-  console.log('Server running and listening on HTTP port ' + PORT)
+  console.log('Server running and listening on HTTP port ' + PORT);
 });
 
