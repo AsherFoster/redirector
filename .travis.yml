@@ -6,6 +6,8 @@ script: npm test && npm build
 
 before_deploy:
   - cat .gitignore.deploy > .gitignore
+  - git add .gitignore
+  - ls -la
 deploy:
   provider: azure_web_apps
   skip_cleanup: true
