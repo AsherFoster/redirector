@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - "node"
 
-script: npm test && npm build
+script: npm test && npm run build
 
 deploy:
   provider: azure_web_apps
