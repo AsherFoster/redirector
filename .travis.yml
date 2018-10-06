@@ -4,7 +4,9 @@ node_js:
 
 script: npm test && npm build
 
-before_deploy: cat .gitignore.deploy > .gitignore
+before_deploy:
+  - cat .gitignore.deploy > .gitignore
+  - git add .gitignore
 deploy:
   provider: azure_web_apps
 #  username: azure_deployment_user       # If AZURE_WA_USERNAME isn't set
