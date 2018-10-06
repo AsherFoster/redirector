@@ -96,7 +96,8 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 
 :: 2. Select node version
 call :SelectNodeVersion
-call :ExecuteCmd "!NODE_EXE!" -v
+echo Using Node Version...
+call :ExecuteCmd node -v
 
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
@@ -108,7 +109,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 
 :: 4. Compile TypeScript
 echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...
-call :ExecuteCmd "!NODE_EXE!" %DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc -p "%DEPLOYMENT_TARGET%"
+call :ExecuteCmd node %DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc -p "%DEPLOYMENT_TARGET%"
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
