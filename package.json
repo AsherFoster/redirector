@@ -1,0 +1,31 @@
+{
+  "name": "redirector",
+  "version": "1.0.0",
+  "description": "Simple thing for executing URL redirects",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsherFoster/redirector.git"
+  },
+  "author": "Asher Foster <me@asherfoster.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AsherFoster/redirector/issues"
+  },
+  "homepage": "https://github.com/AsherFoster/redirector#readme",
+  "devDependencies": {
+    "@types/mongodb": "^3.1.10",
+    "@types/node": "^10.11.4",
+    "@types/raven": "^2.5.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.1"
+  },
+  "dependencies": {
+    "mongodb": "^3.1.6",
+    "raven": "^2.6.4"
+  }
+}
