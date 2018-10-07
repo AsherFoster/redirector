@@ -112,15 +112,15 @@ selectNodeVersion
 # 3. Install npm packages
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  echo "Running $NPM_CMD install --production"
-  eval $NPM_CMD install --production
+  echo "Running $NPM_CMD install"
+  eval $NPM_CMD install
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
 
 # Compile Typescript
 echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
-eval $NODE_EXE "${DEPLOYMENT_TARGET}\node_modules\typescript\bin\tsc" -p "$DEPLOYMENT_TARGET"
+"$NODE_EXE" "${DEPLOYMENT_TARGET}\node_modules\typescript\bin\tsc" -p "$DEPLOYMENT_TARGET"
 
 ##################################################################################################################################
 echo "Finished successfully."
