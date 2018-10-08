@@ -123,4 +123,13 @@ echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
 "$NODE_EXE" "${DEPLOYMENT_TARGET}\node_modules\typescript\bin\tsc" -p "$DEPLOYMENT_TARGET"
 
 ##################################################################################################################################
+
+# Post deployment stub
+if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
+  POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
+  cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
+  "$POST_DEPLOYMENT_ACTION"
+  exitWithMessageOnError "post deployment action failed"
+fi
+
 echo "Finished successfully."
