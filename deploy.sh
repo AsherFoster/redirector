@@ -127,10 +127,10 @@ echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
 exitWithMessageOnError "failed to compile typescript"
 
 echo "Marking as deployed via Sentry"
-VERSION=$(${SENTRY_CLI} releases propose-version)
+VERSION=$(git rev-parse HEAD)
 curl -X POST \
   "https://sentry.io/api/0/organizations/${SENTRY_ORG}/releases/${VERSION}/deploys/" \
-  -H "Authorization: Bearer ${SENTRY_AUTH_KEY}" \
+  -H "Authorization: Bearer ${SENTRY_AUTH_TOKEN}" \
   -H 'Content-Type: application/json' \
   -d '{
 	"environment": "'${NODE_ENV}'",
