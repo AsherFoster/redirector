@@ -115,12 +115,15 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   echo "Running $NPM_CMD install"
   eval $NPM_CMD install
   exitWithMessageOnError "npm failed"
+  echo "Installed Packages:"
+  eval $NPM_CMD ls --depth=0
   cd - > /dev/null
 fi
 
 # Compile Typescript
 echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
 "$NODE_EXE" "${DEPLOYMENT_TARGET}\node_modules\typescript\bin\tsc" -p "$DEPLOYMENT_TARGET"
+exitWithMessageOnError "failed to compile typescript"
 
 echo "Marking as deployed via Sentry"
 SENTRY_CLI=${DEPLOYMENT_TARGET}/node_modules/.bin/sentry-cli
