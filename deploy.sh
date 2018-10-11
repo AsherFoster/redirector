@@ -123,7 +123,7 @@ echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
 "$NODE_EXE" "${DEPLOYMENT_TARGET}\node_modules\typescript\bin\tsc" -p "$DEPLOYMENT_TARGET"
 
 echo "Marking as deployed via Sentry"
-SENTRY_CLI=./node_modules/.bin/sentry-cli
+SENTRY_CLI=${DEPLOYMENT_TARGET}/node_modules/.bin/sentry-cli
 VERSION=$(${SENTRY_CLI} releases propose-version)
 ${SENTRY_CLI} releases deploys ${VERSION} new -e ${NODE_ENV}
 

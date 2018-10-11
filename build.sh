@@ -6,5 +6,9 @@ VERSION=$(${SENTRY_CLI} releases propose-version)
 # Create a release
 ${SENTRY_CLI} releases new -p redirector ${VERSION}
 
+npm test && npm run build
+
+${SENTRY_CLI} releases finalize ${VERSION}
+
 # Associate commits with the release
 ${SENTRY_CLI} releases set-commits --auto ${VERSION}
