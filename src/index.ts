@@ -1,3 +1,4 @@
+import './raven';
 import * as Raven from 'raven';
 import * as http from 'http';
 import * as url from 'url';

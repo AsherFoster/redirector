@@ -26,7 +26,7 @@ exitWithMessageOnError "Missing node.js executable, please install node.js, if a
 # Setup
 # -----
 
-DEPLOY_START=$(date +%s)
+DEPLOY_START=$(date +%FT%T%z)
 SCRIPT_DIR="${BASH_SOURCE[0]%\\*}"
 SCRIPT_DIR="${SCRIPT_DIR%/*}"
 ARTIFACTS=$SCRIPT_DIR/../artifacts
@@ -136,7 +136,7 @@ curl -X POST \
 	"environment": "'${NODE_ENV}'",
 	"name": "'${VERSION}'",
 	"dateStarted": "'${DEPLOY_START}'",
-	"dateFinished": "'$(date +%s)'"
+	"dateFinished": "'$(date +%FT%T%z)'"
 }'
 
 ##################################################################################################################################
