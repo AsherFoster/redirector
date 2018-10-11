@@ -139,6 +139,10 @@ curl -X POST \
 	"dateFinished": "'$(date +%FT%T%z)'"
 }'
 
+# Please, please let one of these work
+export GIT_HASH=${VERSION}
+echo ${VERSION} > ${DEPLOYMENT_TARGET}/version.txt
+
 ##################################################################################################################################
 
 # Post deployment stub
