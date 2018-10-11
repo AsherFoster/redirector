@@ -4,5 +4,6 @@ node_js:
 
 script: npm test && npm run build
 
+before_deploy: sh create-sentry-release.sh
 deploy:
   provider: azure_web_apps
