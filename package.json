@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/AsherFoster/redirector#readme",
   "devDependencies": {
-    "@sentry/cli": "^1.36.1",
     "@types/mongodb": "^3.1.10",
     "@types/node": "^10.11.4",
     "@types/raven": "^2.5.1",

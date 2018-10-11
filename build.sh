@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+npm i @sentry/cli
+
 SENTRY_CLI=./node_modules/.bin/sentry-cli
 VERSION=$(${SENTRY_CLI} releases propose-version)
 

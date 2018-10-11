@@ -26,6 +26,7 @@ exitWithMessageOnError "Missing node.js executable, please install node.js, if a
 # Setup
 # -----
 
+DEPLOY_START=$(date +%s)
 SCRIPT_DIR="${BASH_SOURCE[0]%\\*}"
 SCRIPT_DIR="${SCRIPT_DIR%/*}"
 ARTIFACTS=$SCRIPT_DIR/../artifacts
@@ -112,8 +113,8 @@ selectNodeVersion
 # 3. Install npm packages
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  echo "Running $NPM_CMD install --production=false --scripts-prepend-node-path"
-  eval NODE_ENV=installing $NPM_CMD install --production=false --scripts-prepend-node-path
+  echo "Running $NPM_CMD install --production=false"
+  eval NODE_ENV=installing $NPM_CMD install --production=false
   exitWithMessageOnError "npm failed"
   echo "Installed Packages:"
   eval $NPM_CMD ls --depth=0
@@ -126,10 +127,17 @@ echo "Compiling TypeScript in $DEPLOYMENT_TARGET..."
 exitWithMessageOnError "failed to compile typescript"
 
 echo "Marking as deployed via Sentry"
-SENTRY_CLI=${DEPLOYMENT_TARGET}/node_modules/.bin/sentry-cli
 VERSION=$(${SENTRY_CLI} releases propose-version)
-${SENTRY_CLI} releases deploys ${VERSION} new -e ${NODE_ENV}
-
+curl -X POST \
+  "https://sentry.io/api/0/organizations/${SENTRY_ORG}/releases/${VERSION}/deploys/" \
+  -H "Authorization: Bearer ${SENTRY_AUTH_KEY}" \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"environment": "'${NODE_ENV}'",
+	"name": "'${VERSION}'",
+	"dateStarted": "'${DEPLOY_START}'",
+	"dateFinished": "'$(date +%s)'"
+}'
 
 ##################################################################################################################################
 
