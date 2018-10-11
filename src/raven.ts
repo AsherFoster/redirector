@@ -2,7 +2,7 @@ import * as Raven from 'raven';
 import {execSync} from 'child_process';
 const SENTRY_DSN = process.env.CUSTOMCONNSTR_SENTRY_DSN || process.env.SENTRY_DSN;
 const ENVIRONMENT = process.env.NODE_ENV || 'production';
-const RELEASE = execSync('echo "git rev-parse HEAD" | sh').toString().slice(0, -1);
+const RELEASE = execSync('git rev-parse HEAD', {shell: '/bin/sh'}).toString().slice(0, -1);
 
 Raven.config(ENVIRONMENT === 'production' && SENTRY_DSN, {
   autoBreadcrumbs: true,
