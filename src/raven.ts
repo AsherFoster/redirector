@@ -3,7 +3,7 @@ import {execSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const SENTRY_DSN = process.env.CUSTOMCONNSTR_SENTRY_DSN || process.env.SENTRY_DSN;
+const SENTRY_DSN = process.env.SENTRY_DSN;
 const ENVIRONMENT = process.env.NODE_ENV || 'production';
 let RELEASE;
 
